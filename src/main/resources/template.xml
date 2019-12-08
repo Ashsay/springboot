@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<excel id="student" code="student" name="学生信息录入模板">
+  <colgroup>
+    <col index="A" width="17em"></col>
+    <col index="B" width="17em"></col>
+    <col index="C" width="17em"></col>
+    <col index="D" width="17em"></col>
+    <col index="E" width="17em"></col>
+  </colgroup>
+  <title>
+    <tr height="16px">
+      <td rowspan="1" colspan="6" value="学生信息导入"></td>
+    </tr>
+  </title>
+  <thead>
+    <tr height="16px">
+      <th value="编号"></th>
+      <th value="姓名"></th>
+      <th value="年龄"></th>
+      <th value="性别"></th>
+      <th value="出生日期"></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</excel>
