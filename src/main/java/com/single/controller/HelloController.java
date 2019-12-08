@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +42,7 @@ public class HelloController {
         return "/index";
     }
 
-    @PostMapping("/xls")
+    @PostMapping("/uploadExcel")
     @ResponseBody
     public void excel(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
@@ -49,7 +51,7 @@ public class HelloController {
         operateExcel.readExcelFile(inputStream, fileName);
     }
 
-    @GetMapping("/req")
+    @GetMapping("/writeExcel")
     @ResponseBody
     public Object req() throws IOException {
 
@@ -87,6 +89,31 @@ public class HelloController {
         workbook.write(outputStream);
 
         return result;
+    }
+
+    @GetMapping("/downloadExcel")
+    @ResponseBody
+    public String downloadExcel(HttpServletRequest request, HttpServletResponse response){
+        try{
+            String filePath = System.getProperty("user.dir") + "/uploads/demo.xlsx";
+            String fileName = "demo.xlsx";
+            File file = new File(filePath);
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            response.reset();
+            response.setContentType("application/force-download");// 设置强制下载不打开            
+            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            toClient.write(buffer);
+            toClient.flush();
+            toClient.close();
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
